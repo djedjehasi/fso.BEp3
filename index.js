@@ -26,7 +26,6 @@ let persons = [
     }
 ]
 
-
 let info = `<p>Phonebook has info for ${persons.length} people</p> <p>${Date()}</p>`
 
 app.get('/info', (request, response) => {
@@ -63,11 +62,15 @@ app.post('/api/persons', (request, response) => {
  if(!body.name) {
     return response.status(400).json({
       erorr: 'name missing'
-    })
+    }) 
   } else if (!body.number) {
     return response.status(400).json({
       erorr: 'number missing'
     }) 
+  } else if (persons.find(person => person.name === body.name)){
+    return response.status(400).json({
+      error: 'name must be unique'
+    })
   }
 
   const person = {
