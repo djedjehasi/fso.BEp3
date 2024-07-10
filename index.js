@@ -1,4 +1,5 @@
 const express = require('express')
+morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
@@ -28,7 +29,7 @@ let persons = [
 
 let info = `<p>Phonebook has info for ${persons.length} people</p> <p>${Date()}</p>`
 
-app.get('/info', (request, response) => {
+app.get('/info', morgan('tiny'), (request, response) => {
     response.send(info)
 })
 
