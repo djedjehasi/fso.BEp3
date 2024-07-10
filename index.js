@@ -3,7 +3,9 @@ morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-
+morgan.token('content', (request, response) => {return JSON.stringify(request.body)})
+morgan.format('customTiny', ':method :url :status :res[content-length] - :response-time ms :content');
+app.use(morgan('customTiny'))
 let persons = [
     { 
       "id": "1",
@@ -29,7 +31,7 @@ let persons = [
 
 let info = `<p>Phonebook has info for ${persons.length} people</p> <p>${Date()}</p>`
 
-app.get('/info', morgan('tiny'), (request, response) => {
+app.get('/info', (request, response) => {
     response.send(info)
 })
 
