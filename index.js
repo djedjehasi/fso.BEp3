@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const app = express()
 const cors = require('cors')
 
-const Person = require('./models/person.js')
+const Person = require('./models/person')
 
 morgan.token('content', (request, response) => {return JSON.stringify(request.body)})
 morgan.format('customTiny', ':method :url :status :res[content-length] - :response-time ms :content');
