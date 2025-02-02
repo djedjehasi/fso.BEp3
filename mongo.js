@@ -19,13 +19,12 @@ mongoose.connect(url)
 
     const personSchema = new mongoose.Schema({
       name: String,
-      number: String, // Corrected from 'numnber'
+      number: String,
     });
 
     const Person = mongoose.model('Person', personSchema);
 
     if (name && number) {
-      // Save a new person if name and number are provided
       const person = new Person({
         name: name,
         number: number,
@@ -36,7 +35,6 @@ mongoose.connect(url)
           console.log(`added ${name} number ${number} to phonebook`);
         });
     } else {
-      // Fetch all person if no name and number are provided
       return Person.find({}).then(person => {
         console.log('Phonebook:');
         person.forEach(person => {
