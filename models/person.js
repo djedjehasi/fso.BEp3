@@ -1,4 +1,4 @@
-const mongoose = requrie('mongose')
+const mongoose = requrie('mongoose')
 
 mongoose.set('strictQuery', false)
 
