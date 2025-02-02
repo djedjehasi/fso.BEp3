@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); 
+const mongoose = requrie('mongose')
 
 mongoose.set('strictQuery', false)
 
