@@ -5,6 +5,7 @@ const app = express()
 const cors = require('cors')
 
 const Person = require('./models/person')
+console.log(Person[1])
 
 morgan.token('content', (request, response) => {return JSON.stringify(request.body)})
 morgan.format('customTiny', ':method :url :status :res[content-length] - :response-time ms :content');
@@ -15,7 +16,7 @@ app.use(morgan('customTiny'))
 app.use(cors())
 
 
-let info = `<p>Phonebook has info for ${Person.length - 1} people</p> <p>${Date()}</p>`
+let info = `<p>Phonebook has info for ${Person.length} people</p> <p>${Date()}</p>`
 
 app.get('/info', (request, response) => {
     response.send(info)
@@ -58,15 +59,16 @@ app.post('/api/persons', (request, response) => {
     return response.status(400).json({
       erorr: 'number missing'
     }) 
-  } 
+  }
 
-  Person({
+  const person = new Person({
     name: body.name,
     number: body.number
   })
 
-  Person.save();
-
+  person.save().then(savePerson => {
+    response.json(savePerson)
+  })
 })
 
 const PORT = process.env.PORT || 3001
