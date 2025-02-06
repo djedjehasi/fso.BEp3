@@ -4,7 +4,8 @@ const morgan = require('morgan')
 const app = express()
 const cors = require('cors')
 
-const Person = require('./models/person')
+const Person = require('./models/person');
+const person = require('./models/person');
 
 morgan.token('content', (request, response) => {return JSON.stringify(request.body)})
 morgan.format('customTiny', ':method :url :status :res[content-length] - :response-time ms :content');
@@ -63,6 +64,24 @@ app.post('/api/persons', (request, response) => {
   person.save().then(savePerson => {
     response.json(savePerson)
   })
+})
+
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const id = request.params.id
+  const newNumber = request.body.number
+  console.log("Updating number to:", newNumber);
+
+  Person.findByIdAndUpdate(id, {number: newNumber}, { new: true })
+  .then((updatedPerson) => {
+    if(updatedPerson) {
+      response.json(updatedPerson)
+    } else {
+      response.status(404).end()
+      error: 'cannot update'
+    }
+  })
+  .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
