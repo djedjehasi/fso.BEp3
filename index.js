@@ -30,8 +30,8 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
   const id = request.params.id
-  const person = persons.find(person => person.id === id)
-  response.json(person)
+  Person.findById(id)
+  .then(person => response.json(person))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
