@@ -17,6 +17,11 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true
+    },
+        
+    number: {
+        type: String,
         validate: {
             validator: (num) => {
                 if (num.length < 8)  return false
@@ -31,11 +36,6 @@ const personSchema = new mongoose.Schema({
             },
             message: "Phone Number Invalid - must contain 8 digits, 1 separator (-) after second or third digit and contain only numbers."
         },
-        required: true
-    },
-        
-    number: {
-        type: String,
         required: true
     } 
 })
